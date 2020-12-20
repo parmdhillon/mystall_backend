@@ -20,4 +20,4 @@ app.get('/', (req, res) => {
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/products', productsRoutes);
 
-app.listen(5000, console.log(`Express running @5000`));
+app.listen(8080, '0.0.0.0', console.log(`Express running @5000`));
