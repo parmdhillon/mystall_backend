@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Veggies",
+    "img": "veggies"
+  },
+  {
+    "name": "Fruits",
+    "img": "fruits"
+  },
+  {
+    "name": "Dairy",
+    "img": "dairy"
+  },
+  {
+    "name": "Meat",
+    "img": "meat"
+  },
+  {
+    "name": "Snacks",
+    "img": "snacks"
+  },
+  {
+    "name": "Beverages",
+    "img": "beverages"
+  }
+]
