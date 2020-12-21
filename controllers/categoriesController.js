@@ -10,10 +10,7 @@ const getCategories = async (req, res) => {
       res.json(allCategories);
     } else {
       res.status(404).json({
-        status: 'fail',
-        error: {
-          messagge: 'No Categories Found',
-        },
+        messagge: 'No Categories Found',
       });
     }
   } catch (error) {

@@ -23,6 +23,12 @@ const productSchema = mongoose.Schema({
   },
 });
 
+productSchema.post('init', function (doc) {
+  if(!doc.description){
+    doc.description = `Buy Fresh ${doc.name} and get delivered to your doorstep. Pure Canadian`;
+  }
+});
+
 const Product = mongoose.model('Product', productSchema);
 
 export default Product;
