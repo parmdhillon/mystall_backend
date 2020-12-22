@@ -29,3 +29,24 @@ export const getProduct = async (req, res) => {
     res.status(404).json({ message: 'Product not found' });
   }
 };
+
+export const searchProducts = async (req, res) => {
+  try {
+    const { keyword } = req.body;
+    console.log(req.body)
+    if (!keyword) {
+      throw new Error('No Keyword');
+    }
+    const products = await Product.find({
+      $text: { $search: keyword },
+    });
+
+    if (products.length) {
+      res.json(products);
+    } else {
+      res.status(404).json({ message: 'No products found' });
+    }
+  } catch (error) {
+    res.status(404).json({ message: 'No products found' });
+  }
+};
