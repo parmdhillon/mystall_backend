@@ -1,10 +1,14 @@
 import Product from '../models/productsModel.js';
 
 export const getAllProducts = async (req, res) => {
-  const allProducts = await Product.find({ category: req.params.id }).populate(
-    'category',
-    'name'
-  );
+  const page = req.query.page * 1 || 1;
+  const limit = req.query.limit * 1 || 10;
+  const skip = (page - 1) * limit;
+
+  const allProducts = await Product.find({ category: req.params.id })
+    .skip(skip)
+    .limit(limit)
+    .populate('category', 'name');
 
   if (allProducts.length) {
     res.json(allProducts);
@@ -23,7 +27,7 @@ export const getProduct = async (req, res) => {
     if (product) {
       res.json(product);
     } else {
-      res.status(404).json({ message: 'Product not found' });
+      throw new Error();
     }
   } catch (error) {
     res.status(404).json({ message: 'Product not found' });
@@ -33,7 +37,7 @@ export const getProduct = async (req, res) => {
 export const searchProducts = async (req, res) => {
   try {
     const { keyword } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     if (!keyword) {
       throw new Error('No Keyword');
     }
