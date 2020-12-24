@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Product from '../models/productsModel.js';
 
 export const getAllProducts = async (req, res) => {
@@ -52,5 +53,28 @@ export const searchProducts = async (req, res) => {
     }
   } catch (error) {
     res.status(404).json({ message: 'No products found' });
+  }
+};
+
+export const randomProducts = async (req, res) => {
+  const allProducts = await Product.aggregate([
+    {
+      $sample: { size: 6 },
+    },
+    {
+      $lookup: {
+        from: 'categories',
+        localField: 'category',
+        foreignField: '_id',
+        as: 'category',
+      },
+    },
+    {$unwind: '$category'},
+  ]);
+
+  if (allProducts.length) {
+    res.json(allProducts);
+  } else {
+    res.status(404).json({ message: 'Products not found' });
   }
 };
