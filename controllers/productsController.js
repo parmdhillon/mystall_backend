@@ -3,7 +3,7 @@ import Product from '../models/productsModel.js';
 
 export const getAllProducts = async (req, res) => {
   const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 10;
+  const limit = req.query.limit * 1 || 12;
   const skip = (page - 1) * limit;
 
   const allProducts = await Product.find({ category: req.params.id })
