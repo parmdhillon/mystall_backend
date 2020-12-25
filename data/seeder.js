@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import connDB from '../config/db.js';
 
 import categoriesData from './json/categories.json';
-import productsData from './json/products.json';
+import veggiesData from './json/veggies.json';
+import fruitsData from './json/fruits.json';
 import Categories from '../models/categoriesModel.js';
 import Products from '../models/productsModel.js';
 
@@ -16,7 +17,8 @@ connDB();
     //await Categories.deleteMany();
     await Products.deleteMany();
     //await Categories.insertMany(categoriesData);
-    await Products.insertMany(productsData);
+    await Products.insertMany(veggiesData);
+    await Products.insertMany(fruitsData);
     console.log('Data Added');
   } catch (error) {
     console.log('Error Adding Data:', error);
