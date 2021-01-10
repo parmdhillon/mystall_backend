@@ -5,7 +5,7 @@ import Categories from '../models/categoriesModel.js';
 //@access   PUBLIC
 const getCategories = async (req, res) => {
   try {
-    const allCategories = await Categories.find({});
+    const allCategories = await Categories.find({}).sort('pos');
     if (allCategories.length) {
       res.json(allCategories);
     } else {

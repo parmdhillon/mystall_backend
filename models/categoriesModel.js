@@ -7,6 +7,7 @@ const categoriesSchema = mongoose.Schema({
     unique: true,
   },
   img: String,
+  pos: Number,
 });
 
 const Categories = mongoose.model('Categories', categoriesSchema);
