@@ -6,13 +6,44 @@ export const getAllProducts = async (req, res) => {
   const limit = req.query.limit * 1 || 12;
   const skip = (page - 1) * limit;
 
-  const allProducts = await Product.find({ category: req.params.id })
-    .skip(skip)
-    .limit(limit)
-    .populate('category', 'name');
+  const [{ paginatedResult, totalCount }] = await Product.aggregate([
+    {
+      $facet: {
+        paginatedResult: [
+          {
+            $match: {
+              category: mongoose.Types.ObjectId(req.params.id),
+            },
+          },
+          { $skip: skip },
+          { $limit: limit },
+          {
+            $lookup: {
+              from: 'categories',
+              localField: 'category',
+              foreignField: '_id',
+              as: 'category',
+            },
+          },
+          { $unwind: '$category' },
+        ],
+        totalCount: [
+          {
+            $match: {
+              category: mongoose.Types.ObjectId(req.params.id),
+            },
+          },
+          { $count: 'totalCount' },
+        ],
+      },
+    },
+  ]);
 
-  if (allProducts.length) {
-    res.json(allProducts);
+  if (paginatedResult.length) {
+    res.json({
+      products: paginatedResult,
+      totalProducts: totalCount,
+    });
   } else {
     res.status(404).json({ message: 'Products not found' });
   }
@@ -69,7 +100,7 @@ export const randomProducts = async (req, res) => {
         as: 'category',
       },
     },
-    {$unwind: '$category'},
+    { $unwind: '$category' },
   ]);
 
   if (allProducts.length) {

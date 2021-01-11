@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connDB from './config/db.js';
 import categoriesRoutes from './routes/categoryRoutes.js';
 import productsRoutes from './routes/productsRoute.js';
+import usersRoutes from './routes/usersRoute.js';
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,8 @@ app.get('/', (req, res) => {
 
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/products', productsRoutes);
+app.use('/api/users', usersRoutes);
+
 if (process.env.NODE_ENV === 'development') {
   app.listen(5000, console.log(`Express running @5000`));
 } else {
