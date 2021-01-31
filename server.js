@@ -30,4 +30,4 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/users', usersRoutes);
 
-  app.listen(process.env.PORT || 5000, '0.0.0.0', console.log(`Express running @8080`));
+app.listen(process.env.PORT || 1100, console.log(`Express running`));
